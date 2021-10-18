@@ -144,3 +144,13 @@ Sessionx.vim
 tags
 # Persistent undo
 [._]*.un~
+
+###
+# macOS stuf
+
+.DS_Store
+
+###
+# No logs should be committed
+
+*.log
