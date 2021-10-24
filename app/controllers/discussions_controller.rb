@@ -1,5 +1,6 @@
 class DiscussionsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_discussion, only: [:edit, :update, :destroy]
 
   def index
     @discussions = Discussion.all
@@ -21,9 +22,35 @@ class DiscussionsController < ApplicationController
     end
   end
 
+  def edit
+
+  end
+
+  def update
+    respond_to do |format|
+      if @discussion.update(discussion_params)
+        format.html { redirect_to discussions_path, notice: "Discussion updated" }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def destroy
+    @discussion.destroy!
+
+    redirect_to discussions_path, notice: "Discussion removed"
+
+  end
+
   private
 
   def discussion_params
     params.require(:discussion).permit(:name, :closed, :pinned)
+  end
+
+  def set_discussion
+    logger.debug "Before get discussion find id"
+    @discussion = Discussion.find(params[:id])
   end
 end
